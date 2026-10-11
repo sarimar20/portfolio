@@ -46,6 +46,7 @@ window.I18N = (function () {
     "Diseño de logotipos": "Logo design",
     "Fotografía": "Photography",
     "Ilustración": "Illustration",
+    "Tipografía": "Typography",
   };
 
   const t = (key) => (STRINGS[key] ? STRINGS[key][lang === "en" ? 1 : 0] : key);

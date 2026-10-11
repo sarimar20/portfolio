@@ -2,10 +2,10 @@
 // de la palabra, hace un arco y vuelve a entrar, salpicando strass), contacto,
 // hora de Buenos Aires y botones para volver arriba. Necesita js/i18n.js antes.
 (function () {
-  // Pendiente: completar el mail y el LinkedIn.
+  // Pendiente: completar el mail.
   const LINKS = [
     ["Mail", "mailto:"],
-    ["Linkedin", "#"],
+    ["Linkedin", "https://www.linkedin.com/in/sara-martinez-469878231/"],
     ["Behance", "https://www.behance.net/saramartinez7"],
   ];
   const STONE = "assets/deco/rhinestone.png";

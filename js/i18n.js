@@ -26,7 +26,7 @@ window.I18N = (function () {
       "<p>I'm interested in Argentine culture in all its forms. Showbiz gossip, above all. Music and movies too.</p>" +
       "<p>I'm a graphic designer. I studied at FADU and I live in Buenos Aires. I work on identity and social media, I'm into editorial design and I like getting into things I don't know yet.</p>",
     ],
-    "about.freelance": ["Tomo proyectos freelance. ¡Escribime!", "I take freelance projects. Write me!"],
+    "about.freelance": ["Tomo proyectos freelance. ¡Escribime!", "Open to freelance work. Say hi!"],
     "footer.contact": ["Contactame :)", "Contact me :)"],
     "footer.top": ["Volver arriba", "Back to top"],
   };

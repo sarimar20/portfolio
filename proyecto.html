@@ -24,12 +24,12 @@
       const p = list[i];
       const prev = list[(i - 1 + list.length) % list.length];
       const next = list[(i + 1) % list.length];
-      document.title = `${p.title} — Sara Martinez`;
+      document.title = `${p.title.replace(/\s*\|\s*/g, ". ")} — Sara Martinez`;
 
       const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
       // Separa los textos bilingües "[ES] ... [EN] ..." en párrafos.
       // Los textos bilingües "[ES] … [EN] …" muestran solo el idioma elegido.
-      const { t, pick, field } = window.I18N;
+      const { t, pick, field, title } = window.I18N;
       const paragraphs = (s) => `<p>${esc(pick(s))}</p>`;
       // Flechas de Lucide (move-up-left / move-up-right), toman el gris del texto.
       const svg = (paths) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
@@ -54,15 +54,15 @@
       document.getElementById("project").innerHTML = `
         <header class="project__head">
           <div>
-            <h1 class="project__title">${esc(p.title)}</h1>
+            <h1 class="project__title">${title(p.title)}</h1>
             <p class="project__meta">${p.fields.map((f) => esc(field(f))).join(" · ")}</p>
           </div>
           <div class="project__desc">${p.description ? paragraphs(p.description) : ""}</div>
         </header>
         <section class="project__body">${blocks}</section>
         <nav class="project__nav">
-          <a href="proyecto.html?p=${prev.slug}"><small>${ARROW_PREV}${t("project.prev")}</small>${esc(prev.title)}</a>
-          <a href="proyecto.html?p=${next.slug}"><small>${ARROW_NEXT}${t("project.next")}</small>${esc(next.title)}</a>
+          <a href="proyecto.html?p=${prev.slug}"><small>${ARROW_PREV}${t("project.prev")}</small>${title(prev.title)}</a>
+          <a href="proyecto.html?p=${next.slug}"><small>${ARROW_NEXT}${t("project.next")}</small>${title(next.title)}</a>
         </nav>`;
     })();
   </script>

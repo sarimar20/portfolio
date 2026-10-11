@@ -23,7 +23,7 @@
     document.getElementById("grid").innerHTML = window.PROJECTS.map((p) => `
       <a class="card" href="proyecto.html?p=${p.slug}">
         <img src="${p.cover.thumb}" alt="" loading="lazy">
-        <span class="card__name">${p.title}</span>
+        <span class="card__name">${window.I18N.title(p.title)}</span>
       </a>`).join("");
   </script>
 </body>

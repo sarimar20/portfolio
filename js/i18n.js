@@ -68,5 +68,17 @@ window.I18N = (function () {
     location.reload();
   }
 
-  return { lang, t, field, pick, apply, set };
+  // Títulos de Behance con "|": en la tipografía display la barra se confunde
+  // con una letra, así que se reemplaza por punto y salto de línea
+  // ("GEBA | Diseño Institucional" → "GEBA.<br>Diseño Institucional").
+  // Si la parte anterior ya termina en ? ! o . no se agrega otro punto.
+  function title(text) {
+    const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    return text
+      .split(/\s*\|\s*/)
+      .map(esc)
+      .reduce((html, part, i) => (i === 0 ? part : html + (/[.?!…]$/.test(html) ? "" : ".") + "<br>" + part), "");
+  }
+
+  return { lang, t, field, pick, apply, set, title };
 })();

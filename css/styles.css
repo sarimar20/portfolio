@@ -326,7 +326,9 @@ html.has-overlay { overflow: hidden; }
   margin-top: 40px;
   list-style: none;
 }
-.project__meta li {
+/* Cada pastilla lleva a Proyectos filtrado por esa área. */
+.project__meta a {
+  display: block;
   padding: 5px 10px;
   border: 1px solid var(--muted);
   border-radius: 23px;
@@ -334,7 +336,10 @@ html.has-overlay { overflow: hidden; }
   font-size: 15px;
   line-height: 1.2;
   white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s;
 }
+.project__meta a:hover,
+.project__meta a:focus-visible { color: var(--ink); border-color: var(--ink); outline: none; }
 .project__desc { font-size: 15px; line-height: 1.5; white-space: pre-line; }
 /* En pantallas grandes el texto termina alineado con el final de los links de la nav (antes de ES / EN). */
 @media (min-width: 721px) {

@@ -55,7 +55,8 @@
         <header class="project__head">
           <div>
             <h1 class="project__title">${title(p.title)}</h1>
-            <ul class="project__meta">${p.fields.map((f) => `<li>${esc(field(f))}</li>`).join("")}</ul>
+            <ul class="project__meta">${p.fields.map((f) =>
+              `<li><a href="proyectos.html?area=${encodeURIComponent(f)}">${esc(field(f))}</a></li>`).join("")}</ul>
           </div>
           <div class="project__desc">${p.description ? paragraphs(p.description) : ""}</div>
         </header>

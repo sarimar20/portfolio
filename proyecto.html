@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body data-page="proyecto">
-  <main class="page" id="project"></main>
+  <main id="project"></main>
 
   <script src="js/i18n.js"></script>
   <script src="js/nav.js"></script>
@@ -50,7 +50,12 @@
         return `<div class="project__text">${esc(pick(b.text))}</div>`;
       }).join("");
 
+      // Fondo de la tira: la página de Proyectos, oscurecida (como el visor de Behance).
+      const backdrop = list.map((q) => `<img src="${q.cover.thumb}" alt="">`).join("");
+      const ARROW_UP = svg('<path d="m5 12 7-7 7 7"/><path d="M12 19V5"/>');
+
       document.getElementById("project").innerHTML = `
+        <div class="page project__top">
         <header class="project__head">
           <div>
             <h1 class="project__title">${esc(p.title)}</h1>
@@ -58,11 +63,26 @@
           </div>
           <div class="project__desc">${p.description ? paragraphs(p.description) : ""}</div>
         </header>
-        <section class="project__body">${blocks}</section>
+        </div>
+        <section class="project__stage">
+          <div class="project__backdrop" aria-hidden="true">
+            <p class="project__backdrop-title">${t("projects.title")}</p>
+            <div class="project__backdrop-grid">${backdrop}</div>
+          </div>
+          <div class="project__body">${blocks}</div>
+          <aside class="project__side">
+            <button type="button" class="project__up" aria-label="${t("footer.top")}">${ARROW_UP}</button>
+            <span>${t("project.up")}</span>
+          </aside>
+        </section>
+        <div class="page project__bottom">
         <nav class="project__nav">
           <a href="proyecto.html?p=${prev.slug}"><small>${ARROW_PREV}${t("project.prev")}</small>${esc(prev.title)}</a>
           <a href="proyecto.html?p=${next.slug}"><small>${ARROW_NEXT}${t("project.next")}</small>${esc(next.title)}</a>
-        </nav>`;
+        </nav>
+        </div>`;
+      document.querySelector(".project__up").addEventListener("click", () =>
+        window.scrollTo({ top: 0, behavior: "smooth" }));
     })();
   </script>
 </body>

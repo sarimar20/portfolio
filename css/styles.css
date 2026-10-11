@@ -214,21 +214,88 @@ img { display: block; max-width: 100%; }
 .project__desc { font-size: 15px; line-height: 1.5; max-width: 60ch; white-space: pre-line; }
 .project__desc p + p { margin-top: 1em; }
 
-/* Columna centrada de hasta 1400px, como en Behance: así las imágenes
-   nunca se agrandan más allá de su tamaño real. */
+/* La franja del título queda en blanco; la "tira" de imágenes va sobre la
+   página de Proyectos oscurecida, como el visor de Behance. */
+.project__top, .project__bottom { position: relative; background: var(--bg); }
+.project__top { padding-bottom: 0; }
+.project__bottom { padding-top: 0; }
+.project__stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(16px, 5vw, 96px) minmax(0, 1400px) clamp(16px, 5vw, 96px);
+  justify-content: center;
+  padding: clamp(16px, 2vw, 32px) 0 clamp(32px, 4vw, 64px);
+  background: rgba(17, 17, 17, 0.72);
+}
+.project__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  padding: calc(var(--gutter) * 4) var(--gutter);
+  overflow: hidden;
+  pointer-events: none;
+}
+.project__backdrop-title {
+  font: 400 clamp(40px, 7vw, 96px)/0.95 var(--display);
+  letter-spacing: -0.02em;
+  margin-bottom: calc(var(--gutter) * 2);
+}
+.project__backdrop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: var(--gutter);
+}
+.project__backdrop-grid img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+/* Columna centrada de hasta 1400px: las imágenes nunca se agrandan
+   más allá de su tamaño real. */
 .project__body {
+  grid-column: 2;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+  min-width: 0;
+  background: var(--bg);
+}
+/* Botón para volver arriba en el margen derecho de la tira. */
+.project__side {
+  display: none;
+  grid-column: 3;
+  align-self: start;
+  position: sticky;
+  top: 88px;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 64px;
+  margin-left: 16px;
+  color: #fff;
+  font-size: 11px;
+}
+.project__up {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: #222;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.project__up:hover { transform: translateY(-2px); }
+.project__up svg { width: 22px; height: 22px; }
+@media (min-width: 1560px) {
+  .project__stage { grid-template-columns: 1fr minmax(0, 1400px) 1fr; }
+  .project__side { display: flex; }
+  /* En pantallas anchas el botón vive en el margen de la tira. */
+  body[data-page="proyecto"] .to-top { display: none; }
 }
 .project__body > img { display: block; width: 100%; height: auto; margin: 0 auto; }
 .project__grid img { width: 100%; height: auto; max-width: none !important; }
 .project__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 .project__embed { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; }
 .project__embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.project__text { padding: calc(var(--gutter) * 2) 0; font-size: 15px; max-width: 60ch; white-space: pre-line; }
+.project__text { padding: calc(var(--gutter) * 2) var(--gutter); font-size: 15px; max-width: 60ch; white-space: pre-line; }
 
 .project__nav {
   display: flex;
@@ -360,17 +427,17 @@ body[data-page="about"] button {
   grid-template-columns: 1fr auto;
   grid-template-areas: "title links" ". place";
   align-items: center;
-  gap: clamp(16px, 1.9vw, 36px) clamp(16px, 2.96vw, 57px);
+  gap: clamp(14px, 1.6vw, 31px) clamp(16px, 2.53vw, 49px);
   margin-top: clamp(20px, 1.9vw, 36px);
 }
 .footer__title {
   grid-area: title;
-  font: 400 clamp(24px, 2.93vw, 56px)/1 var(--display);
+  font: 400 clamp(24px, 2.5vw, 48px)/1 var(--display);
   letter-spacing: -0.04em;
 }
-.footer__links { grid-area: links; display: flex; gap: clamp(16px, 2.96vw, 57px); }
+.footer__links { grid-area: links; display: flex; gap: clamp(16px, 2.53vw, 49px); }
 .footer__links a {
-  font-size: clamp(15px, 1.53vw, 29px);
+  font-size: clamp(15px, 1.31vw, 25px);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -378,8 +445,8 @@ body[data-page="about"] button {
   grid-area: place;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: clamp(15px, 1.53vw, 29px);
+  gap: 7px;
+  font-size: clamp(15px, 1.31vw, 25px);
 }
 .footer__place strong { font-weight: 600; }
 .footer__clock { font-variant-numeric: tabular-nums; }

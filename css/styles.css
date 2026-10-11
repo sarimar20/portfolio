@@ -179,6 +179,25 @@ img { display: block; max-width: 100%; }
   margin-bottom: calc(var(--gutter) * 2);
 }
 
+/* Título de página con un link al lado ("Filtros"), mismo estilo que los links del About. */
+.page__head {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(16px, 2vw, 32px);
+  margin-bottom: calc(var(--gutter) * 2);
+}
+.page__head .page__title { margin-bottom: 0; }
+.page__link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: 400 15px/1.2 var(--sans);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));

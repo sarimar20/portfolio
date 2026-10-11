@@ -15,6 +15,7 @@ window.I18N = (function () {
     "landing.work": ["acá mis<br>trabajos", "here's my<br>work"],
     "landing.hint": ["scrolleá para ver más :)", "scroll to see more :)"],
     "projects.title": ["Proyectos", "Projects"],
+    "projects.filters": ["Filtros", "Filters"],
     "project.prev": ["Anterior", "Previous"],
     "project.next": ["Siguiente", "Next"],
     "about.label": ["Sobre mi", "About me"],

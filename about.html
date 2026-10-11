@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About — Sara Martinez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Xanh+Mono:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="about">
+  <main class="about" id="about">
+    <div class="about__panel">
+      <img src="assets/about/about-me.jpg" alt="Delfín, anteojos, trébol, moño y botella bordados en punto cruz">
+    </div>
+    <h1 class="about__label" data-i18n="about.label">Sobre mi</h1>
+    <div class="about__text">
+      <div class="about__bio" data-i18n="about.bio"></div>
+      <p class="about__freelance" data-i18n="about.freelance"></p>
+      <div class="about__links">
+        <a href="https://www.behance.net/saramartinez7" target="_blank" rel="noopener">Behance</a>
+      </div>
+    </div>
+  </main>
+  <script src="js/i18n.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/gravity.js"></script>
+  <script>Gravity.mount(document.getElementById("about"), { density: 0.45, still: true });</script>
+</body>
+</html>

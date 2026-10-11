@@ -1,0 +1,429 @@
+:root {
+  --bg: #ffffff;
+  --ink: #111111;
+  --muted: #8a8a8a;
+  --line: #e6e6e6;
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --display: "Xanh Mono", ui-monospace, monospace;
+  --rose: #e0313a;
+  --leaf: #3d7a2b;
+  --sky: #cde9fd;
+  --gutter: clamp(16px, 2.2vw, 32px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-font-smoothing: antialiased; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 13px/1.4 var(--sans);
+  letter-spacing: -0.01em;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ---------- Nav ---------- */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px var(--gutter);
+  background: rgba(243, 243, 243, 0.5);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--ink);
+}
+.nav > * { pointer-events: auto; }
+.nav__logo { font: 400 clamp(18px, 1.4vw, 24px)/1 var(--display); letter-spacing: -0.03em; }
+.nav__links { display: flex; gap: 18px; }
+.nav__links a { opacity: 0.55; transition: opacity 0.2s; }
+.nav__links a:hover,
+.nav__links a[aria-current="page"] { opacity: 1; }
+.nav__links sup { font-size: 8px; margin-left: 1px; }
+.nav__right { display: flex; align-items: baseline; gap: 28px; }
+.lang { display: flex; gap: 4px; font-size: 13px; color: var(--muted); }
+.lang button {
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.lang button[aria-pressed="true"] { color: var(--ink); }
+
+/* ---------- Landing ---------- */
+.landing { height: 420vh; position: relative; }
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.flower { position: absolute; inset: 0; }
+
+.intro {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 clamp(16px, 10vw, 200px);
+  pointer-events: none;
+  z-index: 5;
+  font-size: clamp(24px, 2.05vw, 40px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+.intro__name { font-family: var(--display); }
+.intro__role { text-align: center; }
+
+.tile {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--size, 56px);
+  will-change: transform;
+  cursor: pointer;
+  z-index: 2;
+  outline: 1px solid rgba(17, 17, 17, 0.1);
+  outline-offset: -1px;
+}
+.tile img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05) brightness(1.08);
+  transition: filter 0.35s ease, transform 0.35s ease;
+}
+/* Monocromo rojo / verde según el pixel de la flor (se tiñe al llegar). */
+.tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--tint, transparent);
+  mix-blend-mode: multiply;
+  opacity: var(--tint-o, 0);
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.tile--r { --tint: var(--rose); }
+.tile--g { --tint: var(--leaf); }
+.tile:hover { z-index: 10; }
+.tile:hover img { filter: none; transform: scale(1.35); }
+.tile:hover::after { opacity: 0; }
+
+/* ---------- Cositas con gravedad ---------- */
+.gravity {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 8;
+  overflow: hidden;
+}
+.gravity__piece {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: auto;
+  will-change: transform;
+  user-select: none;
+}
+
+.hover-label {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 60;
+  padding: 4px 8px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.hover-label.is-visible { opacity: 1; }
+
+.scroll-hint {
+  position: absolute;
+  bottom: var(--gutter);
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--muted);
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+/* ---------- Proyectos (grilla) ---------- */
+.page { padding: calc(var(--gutter) * 4) var(--gutter) calc(var(--gutter) * 3); }
+
+.page__title {
+  font: 400 clamp(40px, 7vw, 96px)/0.95 var(--display);
+  letter-spacing: -0.02em;
+  margin-bottom: calc(var(--gutter) * 2);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: var(--gutter);
+}
+.card { position: relative; display: block; overflow: hidden; background: #f4f4f4; }
+.card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.card__name {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  text-align: center;
+  font: 400 clamp(20px, 2vw, 28px)/1.05 var(--display);
+  color: #fff;
+  background: rgba(17, 17, 17, 0.55);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.card:hover .card__name,
+.card:focus-visible .card__name { opacity: 1; }
+
+/* ---------- Proyecto (detalle) ---------- */
+.project__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  margin-bottom: calc(var(--gutter) * 2);
+}
+.project__title {
+  font: 400 clamp(36px, 5.5vw, 80px)/0.95 var(--display);
+  letter-spacing: -0.02em;
+}
+.project__meta { color: var(--muted); font-size: 15px; margin-top: 40px; }
+.project__desc { font-size: 15px; line-height: 1.5; max-width: 60ch; white-space: pre-line; }
+.project__desc p + p { margin-top: 1em; }
+
+/* Imágenes casi a sangre: solo un margen fino a los costados. */
+.project__body {
+  display: flex;
+  flex-direction: column;
+  margin: 0 calc(var(--gutter) * -1 + 8px);
+}
+.project__body img { width: 100%; height: auto; }
+.project__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.project__embed { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.project__embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.project__text { padding: calc(var(--gutter) * 2) calc(var(--gutter) - 8px); font-size: 15px; max-width: 60ch; white-space: pre-line; }
+
+.project__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gutter);
+  margin-top: calc(var(--gutter) * 3);
+  padding-top: var(--gutter);
+  border-top: 1px solid var(--line);
+}
+.project__nav a { font: 400 clamp(20px, 2.4vw, 32px)/1.1 var(--display); }
+.project__nav small { display: block; font: 400 11px/1.4 var(--sans); color: var(--muted); margin-bottom: 4px; }
+.project__nav small svg { display: block; width: 20px; height: 20px; margin-bottom: 6px; }
+.project__nav a:last-child small svg { margin-left: auto; }
+.project__nav a:last-child { text-align: right; }
+
+/* ---------- About ---------- */
+.about {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 25fr) minmax(0, 10fr) minmax(0, 46fr);
+  gap: var(--gutter);
+  padding: calc(var(--gutter) * 3.5) clamp(16px, 4vw, 80px) var(--gutter);
+  overflow: hidden;
+}
+.about__panel { background: var(--sky); align-self: start; }
+.about__panel img { width: 100%; height: auto; }
+.about__label { font: 400 clamp(20px, 1.6vw, 30px)/1 var(--display); letter-spacing: -0.04em; }
+.about__bio p {
+  font-size: clamp(22px, 2.86vw, 55px);
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+}
+.about__freelance {
+  margin-top: 32px;
+  font-size: clamp(18px, 2.08vw, 40px);
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+}
+.about__links { display: flex; gap: 18px; margin-top: 32px; font-size: 15px; }
+.about__links a { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 720px) {
+  .intro { align-items: flex-start; padding: 72px var(--gutter) 0; }
+  .project__head, .about { grid-template-columns: 1fr; }
+  .project__head { gap: 24px; }
+  .about__panel { order: 2; max-width: 420px; }
+  .nav__links { gap: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile img, .tile::after, .card__name { transition: none; }
+}
+
+/* En Sobre mi el cursor es un corazón (centro del corazón = punto de clic). */
+body[data-page="about"],
+body[data-page="about"] a,
+body[data-page="about"] button {
+  cursor: url("../assets/deco/cursor-heart.png") 20 20, auto;
+  cursor: -webkit-image-set(url("../assets/deco/cursor-heart.png") 1x, url("../assets/deco/cursor-heart@2x.png") 2x) 20 20, auto;
+}
+
+/* En el About las cositas flotan por detrás del texto y la imagen. */
+.about .gravity { z-index: 0; }
+.about__panel, .about__label, .about__text { position: relative; z-index: 1; }
+
+/* ---------- Footer ---------- */
+.footer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px clamp(40px, 2.9vw, 56px);
+  background: #fae3a8;
+  overflow: hidden;
+}
+/* "sarimar" a todo el ancho; el delfín salta por encima, desde la base del bloque. */
+.footer__hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(32px, 2.9vw, 56px);
+}
+.footer__word {
+  position: relative;
+  font-size: 31.1vw;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  color: #fcd165;
+  opacity: 0.6;
+  white-space: nowrap;
+  user-select: none;
+}
+.footer__dolphin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: clamp(180px, 17.4vw, 340px);
+  opacity: 0;
+  will-change: transform;
+  pointer-events: none;
+}
+.footer__dolphin img { width: 100%; height: auto; }
+.footer__dolphin .footer__gem { position: absolute; width: auto; }
+/* Sin animación: el delfín queda asomado sobre la palabra. */
+.footer.is-static .footer__dolphin { opacity: 1; left: 6%; top: auto; bottom: -20%; }
+.footer__bubble {
+  position: absolute;
+  z-index: 1;
+  width: clamp(12px, 1vw, 20px);
+  animation: bubble 4s ease-in-out infinite alternate;
+}
+.footer__bubble:nth-of-type(3) { animation-delay: -1.3s; }
+.footer__bubble:nth-of-type(4) { animation-delay: -2.6s; }
+@keyframes bubble { to { transform: translateY(-14px); } }
+.footer__drop {
+  position: absolute;
+  left: -6px;
+  top: -6px;
+  z-index: 2;
+  width: 12px;
+  pointer-events: none;
+}
+/* Contacto: título a la izquierda, links a la derecha y Buenos Aires
+   debajo de los links, alineado con su borde izquierdo. */
+.footer__info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "title links" ". place";
+  align-items: center;
+  gap: clamp(20px, 1.9vw, 36px) 32px;
+  margin-top: clamp(48px, 4.7vw, 90px);
+  padding: 0 16px;
+}
+.footer__title {
+  grid-area: title;
+  font: 400 clamp(22px, 1.5vw, 29px)/1 var(--display);
+  letter-spacing: -0.04em;
+}
+.footer__links { grid-area: links; display: flex; gap: 29px; }
+/* Mismo estilo que los links del About. */
+.footer__links a {
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.footer__place {
+  grid-area: place;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 15px;
+}
+.footer__place strong { font-weight: 600; }
+.footer__clock { font-variant-numeric: tabular-nums; }
+
+/* Botones para volver arriba (colores de la paleta). */
+/* Barra de todo el ancho al final, en el celeste de la paleta. */
+.footer__top {
+  align-self: stretch;
+  margin: clamp(48px, 4vw, 72px) -16px calc(clamp(40px, 2.9vw, 56px) * -1);
+  padding: 16px;
+  border: 0;
+  background: var(--sky);
+  color: var(--ink);
+  font: 400 14px/1.2 var(--sans);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.footer__top:hover { background: #b5ddfb; }
+.to-top {
+  position: fixed;
+  right: var(--gutter);
+  bottom: var(--gutter);
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  /* Mismo relleno que la nav: gris claro al 50% con desenfoque. */
+  background: rgba(243, 243, 243, 0.5);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: #222;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.to-top:hover { background: rgba(230, 230, 230, 0.8); }
+.to-top svg { width: 22px; height: 22px; }
+
+@media (max-width: 720px) {
+  /* Links a la izquierda y Buenos Aires a la derecha, a la par. */
+  .footer__info { grid-template-areas: "title title" "links place"; align-items: start; gap: 16px; }
+  .footer__links { gap: 16px; flex-wrap: wrap; }
+  .footer__place { text-align: right; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer__bubble { animation: none; }
+  .to-top, .footer__top { transition: none; }
+}

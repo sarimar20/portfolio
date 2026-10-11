@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proyecto — Sara Martinez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Xanh+Mono:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="proyecto">
+  <main class="page" id="project"></main>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/projects-data.js"></script>
+  <script>
+    (function () {
+      const list = window.PROJECTS;
+      const slug = new URLSearchParams(location.search).get("p");
+      const i = Math.max(0, list.findIndex((p) => p.slug === slug));
+      const p = list[i];
+      const prev = list[(i - 1 + list.length) % list.length];
+      const next = list[(i + 1) % list.length];
+      document.title = `${p.title} — Sara Martinez`;
+
+      const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+      // Separa los textos bilingües "[ES] ... [EN] ..." en párrafos.
+      // Los textos bilingües "[ES] … [EN] …" muestran solo el idioma elegido.
+      const { t, pick, field } = window.I18N;
+      const paragraphs = (s) => `<p>${esc(pick(s))}</p>`;
+      // Flechas de Lucide (move-up-left / move-up-right), toman el gris del texto.
+      const svg = (paths) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+      const ARROW_PREV = svg('<path d="M5 11V5H11"/><path d="M5 5L19 19"/>');
+      const ARROW_NEXT = svg('<path d="M13 5H19V11"/><path d="M19 5L5 19"/>');
+      const img = (im) => `<img src="${im.src}" alt="" loading="lazy" decoding="async">`;
+
+      const blocks = p.blocks.map((b) => {
+        if (b.type === "image") return img(b);
+        if (b.type === "grid") return `<div class="project__grid">${b.images.map(img).join("")}</div>`;
+        if (b.type === "embed") return `<div class="project__embed"><iframe src="${b.src}" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>`;
+        return `<div class="project__text">${esc(pick(b.text))}</div>`;
+      }).join("");
+
+      document.getElementById("project").innerHTML = `
+        <header class="project__head">
+          <div>
+            <h1 class="project__title">${esc(p.title)}</h1>
+            <p class="project__meta">${p.fields.map((f) => esc(field(f))).join(" · ")}</p>
+          </div>
+          <div class="project__desc">${p.description ? paragraphs(p.description) : ""}</div>
+        </header>
+        <section class="project__body">${blocks}</section>
+        <nav class="project__nav">
+          <a href="proyecto.html?p=${prev.slug}"><small>${ARROW_PREV}${t("project.prev")}</small>${esc(prev.title)}</a>
+          <a href="proyecto.html?p=${next.slug}"><small>${ARROW_NEXT}${t("project.next")}</small>${esc(next.title)}</a>
+        </nav>`;
+    })();
+  </script>
+</body>
+</html>

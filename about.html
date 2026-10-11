@@ -11,11 +11,20 @@
 </head>
 <body data-page="about">
   <main class="about" id="about">
-    <div class="about__panel">
-      <!-- En pantallas angostas (cuando la imagen pasa abajo) va la versión horizontal. -->
+    <!-- Secuencia de 3 cuadros: objetos → "Hagamos algo juntos" → corazón.
+         En pantallas angostas (cuando la imagen pasa abajo) va la versión horizontal. -->
+    <div class="about__panel about__frames">
       <picture>
-        <source media="(max-width: 720px)" srcset="assets/about/about-me-horizontal.jpg">
-        <img src="assets/about/about-me.jpg" alt="Delfín, anteojos, trébol, moño y botella bordados en punto cruz">
+        <source media="(max-width: 720px)" srcset="assets/about/frame-1-mobile.jpg">
+        <img src="assets/about/frame-1.jpg" alt="Delfín, anteojos, trébol, moño y botella bordados en punto cruz">
+      </picture>
+      <picture aria-hidden="true">
+        <source media="(max-width: 720px)" srcset="assets/about/frame-2-mobile.jpg">
+        <img src="assets/about/frame-2.jpg" alt="">
+      </picture>
+      <picture aria-hidden="true">
+        <source media="(max-width: 720px)" srcset="assets/about/frame-3-mobile.jpg">
+        <img src="assets/about/frame-3.jpg" alt="">
       </picture>
     </div>
     <h1 class="about__label" data-i18n="about.label">Sobre mi</h1>

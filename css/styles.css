@@ -301,11 +301,15 @@ img { display: block; max-width: 100%; }
 }
 
 /* En Sobre mi el cursor es un corazón (centro del corazón = punto de clic). */
-body[data-page="about"],
-body[data-page="about"] a,
-body[data-page="about"] button {
+body[data-page="about"] {
   cursor: url("../assets/deco/cursor-heart.png") 20 20, auto;
   cursor: -webkit-image-set(url("../assets/deco/cursor-heart.png") 1x, url("../assets/deco/cursor-heart@2x.png") 2x) 20 20, auto;
+}
+/* Sobre algo clickeable, el corazón se agranda. */
+body[data-page="about"] a,
+body[data-page="about"] button {
+  cursor: url("../assets/deco/cursor-heart-big.png") 28 28, pointer;
+  cursor: -webkit-image-set(url("../assets/deco/cursor-heart-big.png") 1x, url("../assets/deco/cursor-heart-big@2x.png") 2x) 28 28, pointer;
 }
 
 /* En el About las cositas flotan por detrás del texto y la imagen. */

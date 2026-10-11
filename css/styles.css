@@ -216,7 +216,23 @@ img { display: block; max-width: 100%; }
 }
 /* Segunda parte del título (lo que en Behance iba después de "|"): 60px cuando el título está en 80px. */
 .project__title .title-sub { font-size: 0.75em; }
-.project__meta { color: var(--muted); font-size: 15px; margin-top: 40px; }
+/* Áreas del proyecto: una por "pastilla" (Figma 49:452). */
+.project__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 15px;
+  margin-top: 40px;
+  list-style: none;
+}
+.project__meta li {
+  padding: 5px 10px;
+  border: 1px solid var(--muted);
+  border-radius: 23px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
 .project__desc { font-size: 15px; line-height: 1.5; white-space: pre-line; }
 /* En pantallas grandes el texto termina alineado con el final de los links de la nav (antes de ES / EN). */
 @media (min-width: 721px) {

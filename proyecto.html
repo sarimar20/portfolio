@@ -55,7 +55,7 @@
         <header class="project__head">
           <div>
             <h1 class="project__title">${title(p.title)}</h1>
-            <p class="project__meta">${p.fields.map((f) => esc(field(f))).join(" · ")}</p>
+            <ul class="project__meta">${p.fields.map((f) => `<li>${esc(field(f))}</li>`).join("")}</ul>
           </div>
           <div class="project__desc">${p.description ? paragraphs(p.description) : ""}</div>
         </header>

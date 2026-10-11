@@ -213,7 +213,11 @@ img { display: block; max-width: 100%; }
 /* Segunda parte del título (lo que en Behance iba después de "|"): 60px cuando el título está en 80px. */
 .project__title .title-sub { font-size: 0.75em; }
 .project__meta { color: var(--muted); font-size: 15px; margin-top: 40px; }
-.project__desc { font-size: 15px; line-height: 1.5; max-width: 60ch; white-space: pre-line; }
+.project__desc { font-size: 15px; line-height: 1.5; white-space: pre-line; }
+/* En pantallas grandes el texto termina alineado con el final de los links de la nav (antes de ES / EN). */
+@media (min-width: 721px) {
+  .project__desc { margin-right: calc(var(--links-inset, var(--gutter)) - var(--gutter)); }
+}
 .project__desc p + p { margin-top: 1em; }
 
 /* Columna centrada de hasta 1400px, como en Behance: así las imágenes
@@ -294,6 +298,9 @@ img { display: block; max-width: 100%; }
   .intro { align-items: flex-start; padding: 72px var(--gutter) 0; }
   .project__head, .about { grid-template-columns: 1fr; }
   .project__head { gap: 24px; }
+  .project__title { font-size: clamp(40px, 11vw, 56px); }
+  /* El texto "hace caja" con la imagen de abajo: justificado, mismo ancho. */
+  .project__desc { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
   .about__panel { order: 2; }
   .nav__links { gap: 12px; }
 }

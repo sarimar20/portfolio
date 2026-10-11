@@ -31,4 +31,13 @@
   );
   document.body.prepend(nav);
   window.I18N.apply();
+
+  // Cuánto falta desde el final de los links (antes de ES / EN) hasta el borde
+  // derecho: el texto del proyecto termina alineado ahí.
+  const linksEl = nav.querySelector(".nav__links");
+  const setInset = () =>
+    document.documentElement.style.setProperty("--links-inset", `${innerWidth - linksEl.getBoundingClientRect().right}px`);
+  setInset();
+  addEventListener("resize", setInset);
+  if (document.fonts) document.fonts.ready.then(setInset);
 })();

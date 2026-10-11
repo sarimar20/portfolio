@@ -129,12 +129,26 @@
   let progress = reduceMotion ? 1 : 0;
   let smooth = progress;
 
+  // En celular (o pantallas táctiles) no hace falta scrollear todo el recorrido:
+  // con el primer gesto hacia abajo la flor se arma sola, en AUTO_DURATION ms.
+  const AUTO_DURATION = 1600;
+  const autoPlay = window.matchMedia("(max-width: 720px), (pointer: coarse)").matches;
+  let autoStart = null;
+  const startAuto = () => { if (autoStart === null) autoStart = performance.now(); };
+  if (autoPlay) {
+    addEventListener("touchmove", startAuto, { passive: true });
+    addEventListener("wheel", (e) => e.deltaY > 0 && startAuto(), { passive: true });
+  }
+
   function readScroll() {
+    if (reduceMotion) { progress = 1; return; }
+    if (autoPlay) { if (scrollY > 4) startAuto(); return; }
     const max = landing.offsetHeight - innerHeight;
-    progress = reduceMotion ? 1 : clamp(scrollY / max);
+    progress = clamp(scrollY / max);
   }
 
   function frame(time) {
+    if (autoPlay && autoStart !== null && !reduceMotion) progress = clamp((time - autoStart) / AUTO_DURATION);
     smooth = lerp(smooth, progress, 0.12);
     const p = smooth;
     const s = time / 1000;

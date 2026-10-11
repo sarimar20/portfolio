@@ -60,6 +60,10 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Landing ---------- */
 .landing { height: 420vh; position: relative; }
+/* En celular la flor se arma sola con el primer gesto: el recorrido es corto. */
+@media (max-width: 720px), (pointer: coarse) {
+  .landing { height: 140vh; height: 140svh; }
+}
 
 .stage {
   position: sticky;
@@ -460,4 +464,19 @@ body[data-page="about"] button {
 @media (prefers-reduced-motion: reduce) {
   .footer__bubble { animation: none; }
   .to-top, .footer__top { transition: none; }
+}
+
+/* ---------- Transición entre páginas ----------
+   Transición nativa del navegador: no agrega descargas ni demora la carga.
+   La página nueva aparece con un fundido y sube apenas; la nav y el botón
+   redondo quedan quietos. Navegadores sin soporte cambian de página como siempre. */
+@view-transition { navigation: auto; }
+.nav { view-transition-name: site-nav; }
+.to-top { view-transition-name: to-top; }
+::view-transition-old(root) { animation: page-out 0.2s ease-in both; }
+::view-transition-new(root) { animation: page-in 0.42s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@keyframes page-out { to { opacity: 0; } }
+@keyframes page-in { from { opacity: 0; transform: translateY(14px); } }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
 }

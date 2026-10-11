@@ -1,0 +1,8 @@
+.DS_Store
+.claude/
+scripts/
+data/
+Imagenes creadas por mi/
+assets/projects/*/*.png
+assets/projects/*/*.jpg
+cross-stitch.html

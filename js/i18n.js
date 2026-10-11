@@ -17,7 +17,6 @@ window.I18N = (function () {
     "projects.title": ["Proyectos", "Projects"],
     "project.prev": ["Anterior", "Previous"],
     "project.next": ["Siguiente", "Next"],
-    "project.up": ["Arriba", "Top"],
     "about.label": ["Sobre mi", "About me"],
     "about.bio": [
       "<p>Me gusta mucho mirar cosas. Le saco fotos a casi todo. A lo que tengo cerca, a lo que pasa todos los días.</p>" +

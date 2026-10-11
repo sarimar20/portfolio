@@ -70,14 +70,16 @@ window.I18N = (function () {
 
   // Títulos de Behance con "|": en la tipografía display la barra se confunde
   // con una letra, así que se reemplaza por punto y salto de línea
-  // ("GEBA | Diseño Institucional" → "GEBA.<br>Diseño Institucional").
+  // ("GEBA | Diseño Institucional" → "GEBA.<br>Diseño Institucional"). La parte
+  // de después va en .title-sub (más chica en el título grande: otro nivel de lectura).
   // Si la parte anterior ya termina en ? ! o . no se agrega otro punto.
   function title(text) {
     const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
     return text
       .split(/\s*\|\s*/)
       .map(esc)
-      .reduce((html, part, i) => (i === 0 ? part : html + (/[.?!…]$/.test(html) ? "" : ".") + "<br>" + part), "");
+      .reduce((html, part, i) =>
+        i === 0 ? part : html + (/[.?!…]$/.test(html) ? "" : ".") + `<br><span class="title-sub">${part}</span>`, "");
   }
 
   return { lang, t, field, pick, apply, set, title };

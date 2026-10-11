@@ -214,17 +214,21 @@ img { display: block; max-width: 100%; }
 .project__desc { font-size: 15px; line-height: 1.5; max-width: 60ch; white-space: pre-line; }
 .project__desc p + p { margin-top: 1em; }
 
-/* Imágenes casi a sangre: solo un margen fino a los costados. */
+/* Columna centrada de hasta 1400px, como en Behance: así las imágenes
+   nunca se agrandan más allá de su tamaño real. */
 .project__body {
   display: flex;
   flex-direction: column;
-  margin: 0 calc(var(--gutter) * -1 + 8px);
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
-.project__body img { width: 100%; height: auto; }
+.project__body > img { display: block; width: 100%; height: auto; margin: 0 auto; }
+.project__grid img { width: 100%; height: auto; max-width: none !important; }
 .project__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 .project__embed { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; }
 .project__embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.project__text { padding: calc(var(--gutter) * 2) calc(var(--gutter) - 8px); font-size: 15px; max-width: 60ch; white-space: pre-line; }
+.project__text { padding: calc(var(--gutter) * 2) 0; font-size: 15px; max-width: 60ch; white-space: pre-line; }
 
 .project__nav {
   display: flex;
@@ -294,10 +298,11 @@ body[data-page="about"] button {
 
 /* ---------- Footer ---------- */
 .footer {
+  --fpad: clamp(16px, 3.4vw, 65px);
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 0 16px clamp(40px, 2.9vw, 56px);
+  padding: clamp(16px, 1vw, 19px) var(--fpad) 0;
   background: #fae3a8;
   overflow: hidden;
 }
@@ -305,12 +310,12 @@ body[data-page="about"] button {
 .footer__hero {
   position: relative;
   overflow: hidden;
-  padding-top: clamp(32px, 2.9vw, 56px);
 }
 .footer__word {
   position: relative;
-  font-size: 31.1vw;
+  font-size: 22.6vw;
   line-height: 0.96;
+  text-align: center;
   letter-spacing: -0.04em;
   color: #fcd165;
   opacity: 0.6;
@@ -322,7 +327,7 @@ body[data-page="about"] button {
   left: 0;
   top: 0;
   z-index: 2;
-  width: clamp(180px, 17.4vw, 340px);
+  width: clamp(110px, 12.6vw, 250px);
   opacity: 0;
   will-change: transform;
   pointer-events: none;
@@ -330,7 +335,7 @@ body[data-page="about"] button {
 .footer__dolphin img { width: 100%; height: auto; }
 .footer__dolphin .footer__gem { position: absolute; width: auto; }
 /* Sin animación: el delfín queda asomado sobre la palabra. */
-.footer.is-static .footer__dolphin { opacity: 1; left: 6%; top: auto; bottom: -20%; }
+.footer.is-static .footer__dolphin { opacity: 1; left: 17%; top: auto; bottom: -20%; }
 .footer__bubble {
   position: absolute;
   z-index: 1;
@@ -355,19 +360,17 @@ body[data-page="about"] button {
   grid-template-columns: 1fr auto;
   grid-template-areas: "title links" ". place";
   align-items: center;
-  gap: clamp(20px, 1.9vw, 36px) 32px;
-  margin-top: clamp(48px, 4.7vw, 90px);
-  padding: 0 16px;
+  gap: clamp(16px, 1.9vw, 36px) clamp(16px, 2.96vw, 57px);
+  margin-top: clamp(20px, 1.9vw, 36px);
 }
 .footer__title {
   grid-area: title;
-  font: 400 clamp(22px, 1.5vw, 29px)/1 var(--display);
+  font: 400 clamp(24px, 2.93vw, 56px)/1 var(--display);
   letter-spacing: -0.04em;
 }
-.footer__links { grid-area: links; display: flex; gap: 29px; }
-/* Mismo estilo que los links del About. */
+.footer__links { grid-area: links; display: flex; gap: clamp(16px, 2.96vw, 57px); }
 .footer__links a {
-  font-size: 15px;
+  font-size: clamp(15px, 1.53vw, 29px);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -375,8 +378,8 @@ body[data-page="about"] button {
   grid-area: place;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 15px;
+  gap: 8px;
+  font-size: clamp(15px, 1.53vw, 29px);
 }
 .footer__place strong { font-weight: 600; }
 .footer__clock { font-variant-numeric: tabular-nums; }
@@ -385,7 +388,7 @@ body[data-page="about"] button {
 /* Barra de todo el ancho al final, en el celeste de la paleta. */
 .footer__top {
   align-self: stretch;
-  margin: clamp(48px, 4vw, 72px) -16px calc(clamp(40px, 2.9vw, 56px) * -1);
+  margin: clamp(24px, 1.9vw, 36px) calc(var(--fpad) * -1) 0;
   padding: 16px;
   border: 0;
   background: var(--sky);
@@ -418,6 +421,7 @@ body[data-page="about"] button {
 .to-top svg { width: 22px; height: 22px; }
 
 @media (max-width: 720px) {
+  .footer__word { font-size: 30vw; }
   /* Links a la izquierda y Buenos Aires a la derecha, a la par. */
   .footer__info { grid-template-areas: "title title" "links place"; align-items: start; gap: 16px; }
   .footer__links { gap: 16px; flex-wrap: wrap; }

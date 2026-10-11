@@ -26,9 +26,9 @@
           [72.8, 0.1, 2.4], [60.3, 1.7, 2.4], [31, 62.9, 4.8],
         ].map(([x, y, s]) => `<img class="footer__gem" src="${STONE}" alt="" style="left:${x}%;top:${y}%;width:${s}%">`).join("")}
       </div>
-      <img class="footer__bubble" src="${STONE}" alt="" style="left:14%;top:30%">
-      <img class="footer__bubble" src="${STONE}" alt="" style="left:23.75%;top:62%">
-      <img class="footer__bubble" src="${STONE}" alt="" style="left:33.5%;top:40%">
+      <img class="footer__bubble" src="${STONE}" alt="" style="left:22%;top:30%">
+      <img class="footer__bubble" src="${STONE}" alt="" style="left:30%;top:62%">
+      <img class="footer__bubble" src="${STONE}" alt="" style="left:38%;top:40%">
     </div>
     <div class="footer__info">
       <p class="footer__title">${t("footer.contact")}</p>
@@ -77,6 +77,19 @@
 
   // El delfín salta dentro del bloque de "sarimar": la base de la palabra es el agua.
   const hero = footer.querySelector(".footer__hero");
+  // Dónde está el texto "sarimar" dentro del bloque (está centrado): el delfín
+  // salta sobre las primeras letras, igual que antes.
+  const wordRange = document.createRange();
+  wordRange.selectNodeContents(footer.querySelector(".footer__word"));
+  let wordLeft = 0, wordWidth = 0;
+  const measureWord = () => {
+    const h = hero.getBoundingClientRect(), w = wordRange.getBoundingClientRect();
+    wordLeft = w.left - h.left;
+    wordWidth = w.width;
+  };
+  measureWord();
+  addEventListener("resize", measureWord);
+  if (document.fonts) document.fonts.ready.then(measureWord);
   let visible = false;
   new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(hero);
 
@@ -113,7 +126,7 @@
 
     if (t <= 1) {
       // Centro del delfín: x lineal, y parábola. Arranca y termina sumergido.
-      const x0 = W * 0.05, x1 = W * 0.36;
+      const x0 = wordLeft + wordWidth * 0.02, x1 = wordLeft + wordWidth * 0.42;
       const under = H + dh * 0.75; // totalmente bajo el agua
       const peak = dh * 0.55; // punto más alto, apenas por debajo del borde de arriba
       const x = x0 + (x1 - x0) * t;

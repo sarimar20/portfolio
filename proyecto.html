@@ -35,7 +35,13 @@
       const svg = (paths) => `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
       const ARROW_PREV = svg('<path d="M5 11V5H11"/><path d="M5 5L19 19"/>');
       const ARROW_NEXT = svg('<path d="M13 5H19V11"/><path d="M19 5L5 19"/>');
-      const img = (im) => `<img src="${im.src}" alt="" loading="lazy" decoding="async">`;
+      // 1400px para pantallas comunes, 2800px para retina (si existe).
+      const SIZES = "(min-width: 1464px) 1400px, calc(100vw - 64px)";
+      // Al cargar, cada imagen queda con tope en su tamaño real para no agrandarse.
+      const CAP = `onload="this.style.maxWidth=this.naturalWidth+'px'"`;
+      const img = (im) => im.src2x
+        ? `<img src="${im.src}" srcset="${im.src} 1400w, ${im.src2x} 2800w" sizes="${SIZES}" alt="" loading="lazy" decoding="async" ${CAP}>`
+        : `<img src="${im.src}" alt="" loading="lazy" decoding="async" ${CAP}>`;
 
       const blocks = p.blocks.map((b) => {
         if (b.type === "image") return img(b);

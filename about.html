@@ -12,7 +12,11 @@
 <body data-page="about">
   <main class="about" id="about">
     <div class="about__panel">
-      <img src="assets/about/about-me.jpg" alt="Delfín, anteojos, trébol, moño y botella bordados en punto cruz">
+      <!-- En pantallas angostas (cuando la imagen pasa abajo) va la versión horizontal. -->
+      <picture>
+        <source media="(max-width: 720px)" srcset="assets/about/about-me-horizontal.jpg">
+        <img src="assets/about/about-me.jpg" alt="Delfín, anteojos, trébol, moño y botella bordados en punto cruz">
+      </picture>
     </div>
     <h1 class="about__label" data-i18n="about.label">Sobre mi</h1>
     <div class="about__text">

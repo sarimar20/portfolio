@@ -13,8 +13,8 @@
   <main class="page">
     <div class="page__head">
       <h1 class="page__title" data-i18n="projects.title">Proyectos</h1>
-      <!-- Por ahora es solo el texto; más adelante puede abrir los filtros por área. -->
-      <button type="button" class="page__link" data-i18n="projects.filters">Filtros</button>
+      <button type="button" class="page__link" id="filters-open" data-i18n="projects.filters">Filtros</button>
+      <button type="button" class="filter-chip" id="filters-active" hidden></button>
     </div>
     <div class="grid" id="grid"></div>
   </main>
@@ -23,12 +23,6 @@
   <script src="js/nav.js"></script>
   <script src="js/footer.js"></script>
   <script src="js/projects-data.js"></script>
-  <script>
-    document.getElementById("grid").innerHTML = window.PROJECTS.map((p) => `
-      <a class="card" href="proyecto.html?p=${p.slug}">
-        <img src="${p.cover.thumb}" alt="" loading="lazy">
-        <span class="card__name">${p.title}</span>
-      </a>`).join("");
-  </script>
+  <script src="js/proyectos.js"></script>
 </body>
 </html>

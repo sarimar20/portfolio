@@ -198,6 +198,89 @@ img { display: block; max-width: 100%; }
   cursor: pointer;
 }
 
+/* Filtro activo al lado de "Filtros": tocándolo se quita. */
+.filter-chip {
+  padding: 5px 10px;
+  border: 1px solid var(--muted);
+  border-radius: 23px;
+  background: none;
+  color: var(--muted);
+  font: 400 15px/1.2 var(--sans);
+  cursor: pointer;
+}
+.filter-chip:hover { border-color: var(--ink); color: var(--ink); }
+
+/* Overlay de filtros (Figma 49:453): fondo oscuro translúcido, título en blanco
+   y pastillas grandes. En hover la pastilla se pone blanca. */
+html.has-overlay { overflow: hidden; }
+.filters {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: flex;
+  align-items: flex-start;
+  padding: calc(var(--gutter) * 4) var(--gutter) var(--gutter);
+  background: rgba(0, 0, 0, 0.35);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  overflow-y: auto;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.filters[hidden] { display: none; } /* cerrado no tapa la página */
+.filters.is-open { opacity: 1; }
+.filters__head {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(16px, 2vw, 32px);
+  margin-bottom: 40px;
+}
+.filters__title {
+  font: 400 clamp(40px, 7vw, 96px)/0.95 var(--display);
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.filters__close {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font: 400 15px/1.2 var(--sans);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.filters__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, 2.1vw, 40px);
+}
+.filters__pill {
+  padding: 0.33em 0.67em;
+  border: 1.16px solid #dedede;
+  border-radius: 62px;
+  background: transparent;
+  color: #dedede;
+  font: 400 clamp(20px, 2.1vw, 40px)/1.2 var(--sans);
+  white-space: nowrap;
+  cursor: pointer;
+  transform: translateY(10px);
+  opacity: 0;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.35s ease, opacity 0.35s ease;
+}
+.filters.is-open .filters__pill { transform: none; opacity: 1; }
+.filters__pill:hover,
+.filters__pill:focus-visible,
+.filters__pill[aria-pressed="true"] {
+  background: #fff;
+  border-color: #7b7a7a;
+  color: #7b7a7a;
+  outline: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .filters, .filters__pill { transition: none; }
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
